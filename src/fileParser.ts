@@ -3,7 +3,7 @@ import path from 'path'
 import Parser from 'srt-parser-2'
 
 
-type parserType = {
+export type parserType = {
     id: string;
     startTime: string;
     startSeconds: number;

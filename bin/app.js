@@ -9,8 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const fileSaver_1 = require("./fileSaver");
 const fileParser_1 = require("./fileParser");
 const commander_1 = require("commander");
+const timeParser_1 = require("./timeParser");
 function Main() {
     return __awaiter(this, void 0, void 0, function* () {
         commander_1.program
@@ -20,11 +22,19 @@ function Main() {
             .option("-s", "second to add or remove")
             .option("-o", "path of output file")
             .action((input, options) => {
-            const { i, o, s } = options;
+            const { o, s } = options;
+            if (!s)
+                return console.error("please specific an second");
             const parsedSrt = (0, fileParser_1.fileParser)(input);
-            if (Array.isArray(parsedSrt) && parsedSrt.length == 0)
+            const second = commander_1.program.args[1];
+            const output = commander_1.program.args[2];
+            console.log('output', output);
+            if (!Array.isArray(parsedSrt) || parsedSrt.length == 0)
                 return console.error("your file is empty");
-            console.log(parsedSrt);
+            const modified = parsedSrt.map(chunk => {
+                return Object.assign(Object.assign({}, chunk), { startTime: (0, timeParser_1.timeParser)(chunk.startTime, +second), startSeconds: +chunk.startSeconds + second, endTime: (0, timeParser_1.timeParser)(chunk.endTime, +second), endSeconds: +chunk.endSeconds + second });
+            });
+            (0, fileSaver_1.fileSaver)(output, modified);
         });
         commander_1.program.parse();
     });

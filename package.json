@@ -5,7 +5,7 @@
   "main": "./bin/index.js",
   "scripts": {
     "test": "test",
-    "start": "node ./bin/app.js C:/Users/Simil/OneDrive/Documents/nodejs/srtcl/fakeFile/John-Wick.srt"
+    "start": "node ./bin/app.js C:/Users/Simil/OneDrive/Documents/nodejs/srtcl/fakeFile/John-Wick.srt -s 10 -o ./john.srt"
   },
   "keywords": [
     "srt"
