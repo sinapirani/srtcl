@@ -10,6 +10,9 @@
   "keywords": [
     "srt"
   ],
+  "bin": {
+    "srtcl": "./bin/app.js"
+  },
   "author": "Sina Pirani",
   "license": "MIT",
   "dependencies": {
