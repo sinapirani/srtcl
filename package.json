@@ -4,7 +4,8 @@
   "description": "A cli tool for edit srt",
   "main": "./bin/index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "node ./bin/app.js C:/Users/Simil/OneDrive/Documents/nodejs/srtcl/fakeFile/John-Wick.srt"
   },
   "keywords": [
     "srt"
