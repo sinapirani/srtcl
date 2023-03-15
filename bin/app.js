@@ -19,22 +19,43 @@ function Main() {
             .name("SrtCl")
             .description("An CMD tool for edit srt files")
             .argument("<string>", "path of input file")
-            .option("-s", "second to add or remove")
+            .option("-remove", "second to remove")
+            .option("-add", "second to add")
             .option("-o", "path of output file")
+            //@ts-ignore
             .action((input, options) => {
-            const { o, s } = options;
-            if (!s)
-                return console.error("please specific an second");
+            if (options.Add && options.Remove) {
+                return console.error(`
+            Error!
+            Please only use add or remove..
+            `);
+            }
+            if (options.Add && options.Remove) {
+                return console.error(`
+            Error!
+            Please at least use add or remove..
+            `);
+            }
+            const second = options.Add ? parseInt(commander_1.program.args[1]) : -parseInt(commander_1.program.args[1]);
+            if (isNaN(second)) {
+                return `
+            Error!
+            Please Insert correct number
+            `;
+            }
+            const { o } = options;
             const parsedSrt = (0, fileParser_1.fileParser)(input);
-            const second = commander_1.program.args[1];
             const output = commander_1.program.args[2];
-            console.log('output', output);
             if (!Array.isArray(parsedSrt) || parsedSrt.length == 0)
                 return console.error("your file is empty");
             const modified = parsedSrt.map(chunk => {
-                return Object.assign(Object.assign({}, chunk), { startTime: (0, timeParser_1.timeParser)(chunk.startTime, +second), startSeconds: +chunk.startSeconds + second, endTime: (0, timeParser_1.timeParser)(chunk.endTime, +second), endSeconds: +chunk.endSeconds + second });
+                return Object.assign(Object.assign({}, chunk), { startTime: (0, timeParser_1.timeParser)(chunk.startTime, (second)), startSeconds: chunk.startSeconds + (second), endTime: (0, timeParser_1.timeParser)(chunk.endTime, (second)), endSeconds: +chunk.endSeconds + (second) });
             });
-            (0, fileSaver_1.fileSaver)(output, modified);
+            const filePath = (0, fileSaver_1.fileSaver)(output, modified);
+            return console.log(`
+            Great!
+            Your file is here: ${filePath}
+            `);
         });
         commander_1.program.parse();
     });

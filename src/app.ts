@@ -11,17 +11,38 @@ async function Main(){
     .name("SrtCl")
     .description("An CMD tool for edit srt files")
     .argument("<string>", "path of input file")
-    .option("-s", "second to add or remove")
+    .option("-remove", "second to remove")
+    .option("-add", "second to add")
     .option("-o", "path of output file")
+    //@ts-ignore
     .action((input, options) => {
-        const {o, s} = options        
-        if(!s)
-            return console.error("please specific an second");
-        const parsedSrt = fileParser(input)
-        const second = program.args[1]
-        const output = program.args[2]
-        console.log('output', output);
+
+        if(options.Add && options.Remove ){
+            return console.error(
+            `
+            Error!
+            Please only use add or remove..
+            `);
+        }
+
+        if(options.Add && options.Remove){
+            return console.error(`
+            Error!
+            Please at least use add or remove..
+            `);
+            
+        }
         
+        const second = options.Add ? parseInt(program.args[1]) : -parseInt(program.args[1])
+        if(isNaN(second)){
+            return `
+            Error!
+            Please Insert correct number
+            `
+        }
+        const {o} = options        
+        const parsedSrt = fileParser(input)
+        const output = program.args[2]
         
         if(!Array.isArray(parsedSrt) || parsedSrt.length == 0 )
             return console.error("your file is empty");
@@ -29,14 +50,20 @@ async function Main(){
         const modified: any = parsedSrt.map(chunk => {
             return {
                 ...chunk,
-                startTime: timeParser(chunk.startTime, +second),
-                startSeconds: +chunk.startSeconds + second,
-                endTime: timeParser(chunk.endTime, +second),
-                endSeconds: +chunk.endSeconds + second
+                startTime: timeParser(chunk.startTime, (second)),
+                startSeconds: chunk.startSeconds + (second),
+                endTime: timeParser(chunk.endTime, (second)),
+                endSeconds: +chunk.endSeconds + (second)
             }
         })
-
-        fileSaver(output, modified)
+        const filePath = fileSaver(output, modified)
+        return console.log(
+            `
+            Great!
+            Your file is here: ${filePath}
+            `
+        );
+        
 
     })
 
