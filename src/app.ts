@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { fileSaver } from './fileSaver';
 import { fileParser, parserType } from './fileParser';
 import {program} from "commander"
