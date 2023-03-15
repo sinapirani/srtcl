@@ -1,6 +1,6 @@
 {
   "name": "srtcl",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A cli tool for edit srt",
   "main": "./bin/index.js",
   "scripts": {
