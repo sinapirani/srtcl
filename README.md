@@ -11,7 +11,7 @@ First, make sure you have NodeJS > 16 & Npm <br>
 ## Help:
 `npx srtcl --help`
 
-## To move 10second forward:
+## To move 10 second forward:
 `npx srtcl <filepath> -add 10 -o <outputpath>`
 
 ## To move 10 second backward:
