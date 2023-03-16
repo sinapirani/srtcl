@@ -3,7 +3,7 @@ Command-Line Base SRT editor 🚀
 
 
 # Install
-First, make sure you have NodeJS > 16 & Npm \n
+First, make sure you have NodeJS > 16 & Npm <br>
 `npx srtcl`
 
 # usage
